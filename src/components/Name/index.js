@@ -7,7 +7,7 @@ export default function Name() {
     return (
         <>
             <div className="name">
-                <h2 className="game-name">TicTacToe</h2>
+                <h2 className="game-name">TicTacToe by <span>NTA</span> </h2>
                 {name && <h3 className="winner-name">Winner is: <span>{name}</span></h3>}
             </div>
         </>
