@@ -1,13 +1,12 @@
-import { boxes, data } from "../../constant";
+import { boxes, data2 } from "../../constant";
 import { useState } from "react";
 import circle_icon from "../../assets/images/circle.png"
 import x_icon from "../../assets/images/cross.png"
 
-export default function Board({isMultiplayer}) {
+export default function BoardComp() {
     let [count, setCount] = useState(0);
     let [lock, setLock] = useState(false);
-    let [turn, setTurn] = useState('x');
-    let [name, setName] = useState('')
+    let [name, setName] = useState('');
 
     const checkWin = (a, winner) => {
         if (a[0] === a[1] && a[1] === a[2] && a[2] !== '') {
@@ -44,22 +43,20 @@ export default function Board({isMultiplayer}) {
         if (count % 2 === 0) {
             e.target.innerHTML = `<img src=${x_icon} />`;
             // gán gtri cho ptu trong mảng:
-            if (data[num] === '') {
-                data[num] = 'x';
+            if (data2[num] === '') {
+                data2[num] = 'x';
                 setCount(count+=1)
             }
-            checkWin(data, 'x');
-            setTurn('o')
+            checkWin(data2, 'x');
         }
         else {
             e.target.innerHTML = `<img src=${circle_icon} />`;
             // gán gtri cho ptu trong mảng:
-            if (data[num] === '') {
-                data[num] = 'o';
+            if (data2[num] === '') {
+                data2[num] = 'o';
                 setCount(count+=1)
             }
-            checkWin(data, 'o')
-            setTurn('x')
+            checkWin(data2, 'o')
         }
     }
 
@@ -69,8 +66,8 @@ export default function Board({isMultiplayer}) {
     }
 
     const handleRestart = () => {
-        for (let i = 0; i < data.length; i++) {
-            data[i] = '';
+        for (let i = 0; i < data2.length; i++) {
+            data2[i] = '';
         }
         setName('')
         const box = document.querySelectorAll('.box');
@@ -79,24 +76,19 @@ export default function Board({isMultiplayer}) {
         }
         setLock(false);
         setCount(0);
-        setTurn('x');
     }
 
     return (
         <>
             <div className="name">
                 <h2 className="game-name">TicTacToe by <span>NTA</span> </h2>
-                <span className="mode">{isMultiplayer ? "1 vs 1 mode" : "1 player mode"}</span>
+                <span className="mode">1 player mode</span>
                 {name && <h3 className="winner-name">Winner is: <span>{name}</span></h3>}
             </div>
             <div className="board">
                 {boxes && boxes.map((_, index) => <div className="box" key={index + 1} id={index + 1} onClick={(e) => {handleClick(e,index)}}></div>)}
             </div>
-            <div className="actions" style={isMultiplayer ? {} : {textAlign: 'center', display: 'block'}}>
-                {isMultiplayer && 
-                <div className="turn">
-                    Turn: <span>{turn}</span>
-                </div>}
+            <div className="actions" style={{display: "block", textAlign: "center"}}>
                 <div className="restart-btn">
                     <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
                 </div>

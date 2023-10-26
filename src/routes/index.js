@@ -1,7 +1,7 @@
 import TicTacToe from "../components/TicTacToe";
 import Home from "../pages/Home";
 
-// const isMultiplayer = true;
+const isMultiplayer = true;
 
 export const routes = [
     {
@@ -10,6 +10,10 @@ export const routes = [
     },
     {
         path: "2-players",
-        element: <TicTacToe />
+        element: <TicTacToe isMultiplayer={isMultiplayer} />
+    },
+    {
+        path: "1-player",
+        element: <TicTacToe isMultiplayer={!isMultiplayer} />
     }
 ]

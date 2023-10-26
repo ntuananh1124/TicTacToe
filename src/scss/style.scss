@@ -34,13 +34,14 @@
 
 .name {
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .game-name {
     color: white;
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 35px;
+    margin-bottom: 5px;
+    font-size: 30px;
 
     span {
         color: $second-color;
@@ -49,7 +50,8 @@
 
 .winner-name {
     margin: 0;
-    font-size: 30px;
+    margin-top: 10px;
+    font-size: 25px;
     color: $third-color;
     span {
         color: $second-color;
@@ -138,8 +140,13 @@
         padding: 20px;
     }
 
-    .winner-name, .game-name {
+    .game-name {
         font-size: 27px;
+    }
+
+    .winner-name {
+        margin-top: 30px;
+        font-size: 21px;
     }
 
     .turn {
