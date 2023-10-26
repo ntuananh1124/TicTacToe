@@ -1,5 +1,4 @@
 import { boxes, data } from "../../constant";
-import "../../scss/style.scss";
 import { useState } from "react";
 import circle_icon from "../../assets/images/circle.png"
 import x_icon from "../../assets/images/cross.png"
@@ -10,6 +9,7 @@ export default function Board() {
     let [count, setCount] = useState(0);
     let [lock, setLock] = useState(false);
     const dispatch = useDispatch();
+    let [turn, setTurn] = useState('x');
 
     const checkWin = (a, winner) => {
         if (a[0] === a[1] && a[1] === a[2] && a[2] !== '') {
@@ -50,7 +50,8 @@ export default function Board() {
                 data[num] = 'x';
                 setCount(count+=1)
             }
-            checkWin(data, 'x')
+            checkWin(data, 'x');
+            setTurn('o')
         }
         else {
             e.target.innerHTML = `<img src=${circle_icon} />`;
@@ -60,6 +61,7 @@ export default function Board() {
                 setCount(count+=1)
             }
             checkWin(data, 'o')
+            setTurn('x')
         }
     }
 
@@ -79,6 +81,7 @@ export default function Board() {
         }
         setLock(false);
         setCount(0);
+        setTurn('x');
     }
 
     return (
@@ -86,8 +89,14 @@ export default function Board() {
             <div className="board">
                 {boxes && boxes.map((_, index) => <div className="box" key={index + 1} id={index + 1} onClick={(e) => {handleClick(e,index)}}></div>)}
             </div>
-            <div className="restart-btn">
-                <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
+            <div className="actions">
+                {turn && 
+                <div className="turn">
+                    Turn: <span>{turn}</span>
+                </div>}
+                <div className="restart-btn">
+                    <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
+                </div>
             </div>
         </>
     )

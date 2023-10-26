@@ -1,0 +1,21 @@
+@import "../../scss/var";
+
+.go-back-btn {
+    border: none;
+    background-color: $second-color;
+    cursor: pointer;
+    color: $box-color;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    margin-top: 40px;
+    margin-left: 40px;
+    position: absolute;
+}
+
+a {
+    text-decoration: none;
+}

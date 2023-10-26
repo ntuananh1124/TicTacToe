@@ -1,11 +1,12 @@
 // import logo from './logo.svg';
 import './App.css';
-import TicTacToe from './components/TicTacToe';
+import AllRoutes from './components/AllRoutes';
+// import TicTacToe from './components/TicTacToe';
 
 function App() {
   return (
-    <TicTacToe />
-  );
+    <AllRoutes />
+  )
 }
 
 export default App;
