@@ -146,6 +146,15 @@
 }
 
 // Responsive:
+@media screen and (max-width: 644px) {
+    .box {
+        width: 100px;
+        height: 100px;
+        padding: 25px;
+    }
+}
+
+
 @media screen and (max-width: 474px) {
     .box {
         width: 90px;

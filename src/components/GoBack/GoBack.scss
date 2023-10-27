@@ -21,6 +21,13 @@ a {
 }
 
 // Responsive:
+@media screen and (max-width: 644px) {
+    .go-back-btn {
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+}
+
 @media screen and (max-width: 474px) {
     .go-back-btn {
         margin-top: 10px;
