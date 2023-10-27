@@ -99,6 +99,7 @@ export default function Board({isMultiplayer}) {
                 </div>}
                 <div className="restart-btn">
                     <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
+                    <span className="restart-btn__note">Note(*): <i>Please click Restart after finishing playing</i> </span>
                 </div>
             </div>
         </>

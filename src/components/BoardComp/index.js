@@ -1,7 +1,8 @@
 import { boxes, data2 } from "../../constant";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import circle_icon from "../../assets/images/circle.png"
 import x_icon from "../../assets/images/cross.png"
+// import { random } from "../../helpers/random";
 
 export default function BoardComp() {
     let [count, setCount] = useState(0);
@@ -45,6 +46,9 @@ export default function BoardComp() {
             // gán gtri cho ptu trong mảng:
             if (data2[num] === '') {
                 data2[num] = 'x';
+                // setTimeout(() => {
+                //     setCount(count+=1)
+                // }, 1000)
                 setCount(count+=1)
             }
             checkWin(data2, 'x');
@@ -59,6 +63,30 @@ export default function BoardComp() {
             checkWin(data2, 'o')
         }
     }
+
+    // useEffect(() => {
+    //     const box = document.querySelectorAll(".box")
+    //     // console.log(box);
+    //     let empty = []
+    //     for (let i = 0; i < box.length; i++) {
+    //         const item = box[i].children
+    //         // console.log(item.length);
+    //         if (item.length === 0) {
+    //             empty.push(box[i])
+    //         }
+    //     }
+    //     if (count % 2 !== 0) {
+    //         for (let i = 0; i < empty.length; i++) {
+    //             const num = random(empty.length);
+    //             empty[num].innerHTML = `<img src=${circle_icon} />`
+    //             if (empty[parseInt(empty[num].id - 1)] === '') {
+    //                 empty[parseInt(empty[num].id - 1)] = 'o';
+    //                 setCount(count+=1)
+    //             }
+    //         }
+    //     }
+    //     console.log(empty);
+    // }, [count])
 
     const win = (winnerName) => {
         setName(winnerName)
@@ -91,6 +119,7 @@ export default function BoardComp() {
             <div className="actions" style={{display: "block", textAlign: "center"}}>
                 <div className="restart-btn">
                     <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
+                    <span className="restart-btn__note">Note(*): <i>Please click Restart after finishing playing</i> </span>
                 </div>
             </div>
         </>
