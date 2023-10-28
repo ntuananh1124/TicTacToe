@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { boxes, data2 } from "../../constant";
 import { useEffect, useState } from "react";
 import circle_icon from "../../assets/images/circle.png"
@@ -9,6 +10,7 @@ export default function BoardComp() {
     let [lock, setLock] = useState(false);
     let [name, setName] = useState('');
     let [data, setData] = useState(data2);
+    let [turn, setTurn] = useState('x');
 
     const checkWin = (a, winner) => {
         if (a[0] === a[1] && a[1] === a[2] && a[2] !== '') {
@@ -51,6 +53,7 @@ export default function BoardComp() {
                 setCount(count+=1)
             }
             checkWin(data, 'x');
+            setTurn('o')
         }
     }
 
@@ -82,13 +85,16 @@ export default function BoardComp() {
                     setData(newData);
                     checkWin(data, 'o');
                 }
-                else alert('het game, please restart')
+                else setTimeout(() => {
+                    handleRestart();
+                }, 1000)
             }
         }
         if (!lock) {
             if (count % 2 !== 0) {
                 setTimeout(() => {
                     putComputerAt(random(empty.length));
+                    setTurn('x')
                 }, 500)
                 setCount(count+=1)
             }
@@ -111,19 +117,23 @@ export default function BoardComp() {
         }
         setLock(false);
         setCount(0);
+        setTurn('x');
     }
 
     return (
         <>
             <div className="name">
-                <h2 className="game-name">TicTacToe by <span>NTA</span> </h2>
+                <h2 className="game-name">TicTacToe by <span>NTA</span></h2>
                 <span className="mode">1 player mode</span>
                 {name && <h3 className="winner-name">Winner is: <span>{name}</span></h3>}
             </div>
             <div className="board">
                 {boxes && boxes.map((_, index) => <div className="box" key={index + 1} id={index + 1} onClick={(e) => {handleClick(e,index)}}></div>)}
             </div>
-            <div className="actions" style={{display: "block", textAlign: "center"}}>
+            <div className="actions">
+                <div className="turn">
+                    Turn: <span>{turn}</span>
+                </div>
                 <div className="restart-btn">
                     <button className="restart-btn__button" onClick={handleRestart}>Restart</button>
                     <span className="restart-btn__note">Note(*): <i>Please click Restart after finishing playing</i> </span>
