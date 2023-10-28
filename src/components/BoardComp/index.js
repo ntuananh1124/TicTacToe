@@ -2,12 +2,13 @@ import { boxes, data2 } from "../../constant";
 import { useEffect, useState } from "react";
 import circle_icon from "../../assets/images/circle.png"
 import x_icon from "../../assets/images/cross.png"
-// import { random } from "../../helpers/random";
+import { random } from "../../helpers/random";
 
 export default function BoardComp() {
     let [count, setCount] = useState(0);
     let [lock, setLock] = useState(false);
     let [name, setName] = useState('');
+    let [data, setData] = useState(data2);
 
     const checkWin = (a, winner) => {
         if (a[0] === a[1] && a[1] === a[2] && a[2] !== '') {
@@ -42,51 +43,57 @@ export default function BoardComp() {
         }
 
         if (count % 2 === 0) {
+            // console.log('test 2');
             e.target.innerHTML = `<img src=${x_icon} />`;
             // gán gtri cho ptu trong mảng:
-            if (data2[num] === '') {
-                data2[num] = 'x';
-                // setTimeout(() => {
-                //     setCount(count+=1)
-                // }, 1000)
+            if (data[num] === '') {
+                data[num] = 'x';
                 setCount(count+=1)
             }
-            checkWin(data2, 'x');
-        }
-        else {
-            e.target.innerHTML = `<img src=${circle_icon} />`;
-            // gán gtri cho ptu trong mảng:
-            if (data2[num] === '') {
-                data2[num] = 'o';
-                setCount(count+=1)
-            }
-            checkWin(data2, 'o')
+            checkWin(data, 'x');
         }
     }
 
-    // useEffect(() => {
-    //     const box = document.querySelectorAll(".box")
-    //     // console.log(box);
-    //     let empty = []
-    //     for (let i = 0; i < box.length; i++) {
-    //         const item = box[i].children
-    //         // console.log(item.length);
-    //         if (item.length === 0) {
-    //             empty.push(box[i])
-    //         }
-    //     }
-    //     if (count % 2 !== 0) {
-    //         for (let i = 0; i < empty.length; i++) {
-    //             const num = random(empty.length);
-    //             empty[num].innerHTML = `<img src=${circle_icon} />`
-    //             if (empty[parseInt(empty[num].id - 1)] === '') {
-    //                 empty[parseInt(empty[num].id - 1)] = 'o';
-    //                 setCount(count+=1)
-    //             }
-    //         }
-    //     }
-    //     console.log(empty);
-    // }, [count])
+    useEffect(() => {
+        const box = document.querySelectorAll(".box")
+        let empty = []
+        for (let i = 0; i < box.length; i++) {
+            const item = box[i].children
+            if (item.length === 0) {
+                empty.push(box[i])
+            }
+        }
+        const putComputerAt = index => {
+            let newData = data;
+            const abc = empty.find(item => parseInt(item.id) === index + 1) 
+            if (abc) {
+                newData[index] = 'o';
+                setData(newData);
+                abc.innerHTML =  `<img src=${circle_icon} />`;
+                checkWin(data, 'o');
+            }
+            else {
+                const emptyIndex = random(empty.length);
+                if (empty.length !== 0) {
+                    empty[emptyIndex].innerHTML = `<img src=${circle_icon} />`;
+                    const emptyItem = empty.find(item => item.id === empty[emptyIndex].id)
+                    const indexDataEmpty = newData.findIndex((_, index) => index === emptyItem.id - 1);
+                    newData[indexDataEmpty] = 'o';
+                    setData(newData);
+                    checkWin(data, 'o');
+                }
+                else alert('het game, please restart')
+            }
+        }
+        if (!lock) {
+            if (count % 2 !== 0) {
+                setTimeout(() => {
+                    putComputerAt(random(empty.length));
+                }, 500)
+                setCount(count+=1)
+            }
+        }
+    }, [count])
 
     const win = (winnerName) => {
         setName(winnerName)
@@ -94,8 +101,8 @@ export default function BoardComp() {
     }
 
     const handleRestart = () => {
-        for (let i = 0; i < data2.length; i++) {
-            data2[i] = '';
+        for (let i = 0; i < data.length; i++) {
+            data[i] = '';
         }
         setName('')
         const box = document.querySelectorAll('.box');
